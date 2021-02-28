@@ -1,5 +1,3 @@
-
-
 const users = [
     { name: 'Mango', active: true },
     { name: 'Poly', active: false },
@@ -9,14 +7,14 @@ const users = [
   
   const toggleUserState = (allUsers, userName) => {
     return new Promise(resolve => {
-    resolve(allUsers, userName);    
-    });    
+      const updatedUsers = allUsers.map(user =>
+          user.name === userName ? { ...user, active: !user.active } : user,
+        );
+    resolve(updatedUsers);        
+    });      
   };
-  
-  const logger = updatedUsers => console.table(updatedUsers);
  
-  /*
-   * Должно работать так
-   */
+  const logger = updatedUsers => console.table(updatedUsers); 
+
   toggleUserState(users, 'Mango').then(logger);
   toggleUserState(users, 'Lux').then(logger);
