@@ -5,13 +5,14 @@ const randomIntegerFromInterval = (min, max) => {
 
   const makeTransaction = (transaction) => {
     const delay = randomIntegerFromInterval(200, 500); 
-    const time = delay;   
+    Promise.resolve(delay);
+   
     const promise = new Promise ((resolve, reject) =>{
         setTimeout(() => {       
             const canProcess = Math.random() > 0.3;        
                 
             if (canProcess) {               
-              resolve(...[transaction.id, time]);
+              resolve([transaction.id, delay] );
                 // {id: transaction.id, 
                 // time: delay});
             } else {            
@@ -20,18 +21,13 @@ const randomIntegerFromInterval = (min, max) => {
         }, delay);
 
         
-         console.log(time);
-    });
-    
-    // promise.then(transaction.id); 
-    //     promise.then(delay); 
-    //     promise.catch(transaction.id);
-// console.log(transaction);
-    // console.log(promise.then ());
-    return promise;
+        //  console.log(a[0]);
+    });   
+    // , new Promise(delay)
+    return promise ;
   };
   
-  const logSuccess = (id, time) => {
+  const logSuccess = ([id, time]) => {
     console.log(`Transaction ${id} processed in ${time} ms`);
   };  
   const logError = id => {
@@ -42,7 +38,7 @@ const randomIntegerFromInterval = (min, max) => {
    * Должно работать так
    */
   makeTransaction({ id: 70, amount: 150 })
-    .then(logSuccess)
+    .then(logSuccess)    
     .catch(logError);
   
   makeTransaction({ id: 71, amount: 230 })
@@ -56,3 +52,5 @@ const randomIntegerFromInterval = (min, max) => {
   makeTransaction({ id: 73, amount: 100 })
     .then(logSuccess)
     .catch(logError); 
+
+   
